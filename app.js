@@ -24,6 +24,15 @@ app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/home.html'));
 });
 
+app.get('/newuser', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/newUser.html'));
+});
+
+app.get('/:id', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/user.html'));
+});
+
+
 // create a port for listening to the messages from clients
 app.listen(port, () => {
    console.log('Express server listening on port ' + port);
