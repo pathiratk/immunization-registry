@@ -5,6 +5,7 @@ exports.allUsers = function (req, res) {
       if (err) {
          res.send(err);
       }
+      // console.log(typeof users);
       res.json(users);
    })
 }
@@ -18,6 +19,7 @@ exports.newUser = function (req, res) {
       motherFirstName: req.body.motherFirstName,
       motherLastName: req.body.motherLastName,
       contactInfo: req.body.contactInfo,
+      appointment: req.body.appointment
    });
    newUser.save(function(err, user) {
       if (err)

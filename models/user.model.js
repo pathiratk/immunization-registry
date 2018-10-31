@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const autoIncrement = require('mongoose-auto-increment');
+const connection = mongoose.createConnection(process.env.MONGODB_URI);
+autoIncrement.initialize(connection);
+
 let UserSchema = new Schema({
    firstName: {type: String, required: true},
    lastName: {type: String, required: true},
@@ -14,8 +18,9 @@ let UserSchema = new Schema({
       vaccine: {type: String, required: true},
       administeredBy: {type: String, required: true}
    }],
-   appointment: {type: Date},
+   appointment: {type: Date, required: true},
    created_date: {type: Date, default: Date.now}
 });
 
+UserSchema.plugin(autoIncrement.plugin, 'User');
 module.exports = mongoose.model('User', UserSchema);
