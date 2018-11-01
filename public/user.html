@@ -73,31 +73,25 @@
 
             <div>
                 <h2 class="content-subhead">+ Add new immunization</h2>
-                <form id= "immunization" class="pure-form pure-form-aligned">
+                <form id="newImmu" class="pure-form pure-form-aligned">
                     <fieldset>
                         <div class="pure-control-group">
                             <label for="vaccine">Vaccine</label>
                             <select id="vaccine">
                                 <option disabled selected value>Select one</option>
-                                <option value="HepB">HepB</option>
-                                <option value="PCV">PCV</option>
-                                <option value="MMR">MMR</option>
-                                <option value="Influenza">Influenza</option>
+                                <option>HepB</option>
+                                <option>PCV</option>
+                                <option>MMR</option>
+                                <option>Influenza</option>
                             </select>
                         </div>
                 
                         <div class="pure-control-group">
-                            <label for="administered-by">Administered by</label>
-                            <input id="administered-by" type="text">
+                            <label for="administeredBy">Administered by</label>
+                            <input id="administeredBy" type="text">
                         </div>
-
-                        <h2 class="content-subhead">Next appointment</h2>
-                        <div class="pure-control-group">
-                            <label for="appointment">Date</label>
-                            <input id="appointment" type="date">
-                        </div>
-                        <div class="pure-controls">
-                            <button type="submit" class="pure-button pure-button-primary">Save</button>
+                
+                        <button type="submit" class="pure-button pure-button-primary">Submit</button>
                         </div>
                     </fieldset>
                 </form>

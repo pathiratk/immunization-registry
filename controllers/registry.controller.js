@@ -5,7 +5,6 @@ exports.allUsers = function (req, res) {
       if (err) {
          res.send(err);
       }
-      // console.log(typeof users);
       res.json(users);
    })
 }
@@ -38,13 +37,11 @@ exports.getUser = function (req, res) {
 }
 
 exports.updateUser = function (req, res) {
-   console.log(req.body);
    var vaccine = {
       "date": Date.now(),
       "vaccine": req.body.vaccine,
       "administeredBy": req.body.administeredBy,
    }
-   // var vaccine = req.body.vaccine;
    var ap = req.body.appointment;
    if (ap) {
       User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}, $set: {"appointment": ap}}, function(err, user) {

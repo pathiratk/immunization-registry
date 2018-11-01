@@ -18,14 +18,12 @@
             var items =[];
             var vaccines = [];
             $.each(data, function(key, val) {
-                // console.log(key, val);
                 if (field[key]) {
                     if (key == "appointment" || key == "dateOfBirth") {
                         val = val.substring(0, 10);
                     }
                     items.push("<tr><th>" + field[key] + "</th><td>" + val + "</td></tr>");
                 } else if (key == "pastImmunization") {
-                    // console.log(val);
                     for (var i = 0; i < val.length; i++) {
                         val[i].date = val[i].date.substring(0, 10);
                     }
@@ -44,17 +42,14 @@
                 html: items.join("")
             }).appendTo("#general");
         });
-        
+
         $("#immunization").submit(function(event) {
-            // var allInputs = $(":input");
             event.preventDefault();
-            var appointment = $(this).find("#appointment").val();
             var input = {
+                appointment: $(this).find("#appointment").val(),
                 vaccine: $(this).find("#vaccine").val(),
                 administeredBy: $(this).find("#administered-by").val()
             }
-            // console.log(administeredBy);
-            // alert(allInputs);
             var url = "api/users/" + userID;
             var result = $.post(url, input);
             result.done(function(data) {
