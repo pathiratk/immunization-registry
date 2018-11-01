@@ -14,6 +14,7 @@
         <!--[if gt IE 8]><!-->
             <link rel="stylesheet" href="css/layouts/side-menu.css">
         <!--<![endif]-->
+        <link rel="stylesheet" href="css/layouts/user.css">
 
    <!-- jquery and datatables -->
    <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
@@ -44,21 +45,70 @@
     <div id="main">
         <div class="header">
             <h1>Immunization Registry</h1>
-            <h2>User</h2>
+            <!-- <h2>User</h2> -->
         </div>
 
         <div class="content">
          <h2 class="content-subhead"></h2>
+            <h2 class="content-subhead">General Information</h2>
+            <table id="general" class= "pure-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+            </table>
+            <h2 class="content-subhead">Past Immunizations</h2>
+            <table id="immunizations" class="display">
+                    <thead>
+                       <tr>
+                          <th>Date</th>
+                          <th>Vaccine</th>
+                       </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+              </table>
 
-         
+            <div>
+                <h2 class="content-subhead">+ Add new immunization</h2>
+                <form id= "immunization" class="pure-form pure-form-aligned">
+                    <fieldset>
+                        <div class="pure-control-group">
+                            <label for="vaccine">Vaccine</label>
+                            <select id="vaccine">
+                                <option disabled selected value>Select one</option>
+                                <option value="HepB">HepB</option>
+                                <option value="PCV">PCV</option>
+                                <option value="MMR">MMR</option>
+                                <option value="Influenza">Influenza</option>
+                            </select>
+                        </div>
+                
+                        <div class="pure-control-group">
+                            <label for="administered-by">Administered by</label>
+                            <input id="administered-by" type="text">
+                        </div>
+
+                        <h2 class="content-subhead">Next appointment</h2>
+                        <div class="pure-control-group">
+                            <label for="appointment">Date</label>
+                            <input id="appointment" type="date">
+                        </div>
+                        <div class="pure-controls">
+                            <button type="submit" class="pure-button pure-button-primary">Save</button>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
         </div>
-
-    
     </div>
 </div>
 
 <script src="js/ui.js"></script>
-<!-- <script src="js/home.js"></script> -->
+<script src="js/user.js"></script>
 
 </body>
 </html>

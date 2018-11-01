@@ -18,7 +18,7 @@ let UserSchema = new Schema({
       vaccine: {type: String, required: true},
       administeredBy: {type: String, required: true}
    }],
-   appointment: {type: Date, required: true},
+   appointment: {type: Date},
    created_date: {type: Date, default: Date.now}
 });
 

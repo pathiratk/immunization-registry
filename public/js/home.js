@@ -23,9 +23,6 @@
                 "render": function (data, type, row, meta) {
                     return '<a href="/'+data+'">'+data+'</a>';
                 }
-
-                
-                
             }],
             columns: [
                 {data: "_id"},

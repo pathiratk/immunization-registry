@@ -110,7 +110,7 @@ appears on the left side of the page.
     }
 
     /*
-    Add that light border to separate items into groups.
+    Add that light border to separate items into groupqs.
     */
     #menu .pure-menu ul,
     #menu .pure-menu .menu-item-divided {
@@ -134,12 +134,13 @@ appears on the left side of the page.
     #menu .pure-menu-heading {
         background: #1f8dd6;
     }
-        /*
-        This styles a link within a selected menu item `<li>`.
-        */
-        #menu .pure-menu-selected a {
-            color: #fff;
-        }
+
+    /*
+    This styles a link within a selected menu item `<li>`.
+    */
+    #menu .pure-menu-selected a {
+        color: #fff;
+    }
 
     /*
     This styles the menu heading.

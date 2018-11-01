@@ -18,8 +18,7 @@ exports.newUser = function (req, res) {
       gender: req.body.gender,// enum
       motherFirstName: req.body.motherFirstName,
       motherLastName: req.body.motherLastName,
-      contactInfo: req.body.contactInfo,
-      appointment: req.body.appointment
+      contactInfo: req.body.contactInfo
    });
    newUser.save(function(err, user) {
       if (err)
@@ -45,10 +44,21 @@ exports.updateUser = function (req, res) {
       "vaccine": req.body.vaccine,
       "administeredBy": req.body.administeredBy,
    }
-   User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}}, function(err, user) {
-      if (err) {
-         res.send(err);
-      }
-      res.json(user);
-   })
+   // var vaccine = req.body.vaccine;
+   var ap = req.body.appointment;
+   if (ap) {
+      User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}, $set: {"appointment": ap}}, function(err, user) {
+         if (err) {
+            res.send(err);
+         }
+         res.json(user);
+      })
+   } else {
+      User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}}, function(err, user) {
+         if (err) {
+            res.send(err);
+         }
+         res.json(user);
+      })
+   }
 }
