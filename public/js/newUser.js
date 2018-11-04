@@ -17,7 +17,6 @@
             var url = "api/users/";
             var result = $.post(url, input);
             result.done(function(data) {
-                console.log(data);
                 $(location).attr('href', '/home');
             });
         });
