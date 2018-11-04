@@ -6,3 +6,13 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
+
+tr.group, tr.group:hover {
+    background-color: #ddd !important;
+}
+
+button{
+    float: right;
+    background-color: #1f8dd6 !important;
+    color: #fff !important;
+}

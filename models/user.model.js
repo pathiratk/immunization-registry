@@ -13,14 +13,15 @@ let UserSchema = new Schema({
    motherFirstName: {type: String, required: true},
    motherLastName: {type: String, required: true},
    contactInfo: {type: String, required: true},
-   pastImmunization : [{
+   // pastImmunization : [{
+   //    date: {type: Date, required: true},
+   //    vaccine: {type: String, required: true},
+   //    administeredBy: {type: String, required: true}
+   // }],
+   immunization: [{
       date: {type: Date, required: true},
       vaccine: {type: String, required: true},
-      administeredBy: {type: String, required: true}
-   }],
-   scheduledImmunization: [{
-      date: {type: Date, required: true},
-      vaccine: {type: String, required: true}
+      administered: {type: Boolean, default: false}
    }],
    appointment: {type: Date},
    created_date: {type: Date, default: Date.now}

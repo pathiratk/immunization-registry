@@ -14,7 +14,6 @@ exports.newUser = function (req, res) {
    var schedule = Schedule(req.body.dateOfBirth);
    var nextApp = new Date();
    nextApp.setMonth(nextApp.getMonth() + 2);
-   console.log(schedule);
    var newUser = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -23,7 +22,7 @@ exports.newUser = function (req, res) {
       motherFirstName: req.body.motherFirstName,
       motherLastName: req.body.motherLastName,
       contactInfo: req.body.contactInfo,
-      scheduledImmunization: schedule,
+      immunization: schedule,
       appointment: nextApp
    });
    // return;

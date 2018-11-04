@@ -16,28 +16,33 @@
         var url = "api/users/" + userID;
         $.getJSON(url, function(data) {
             var items =[];
-            var vaccines = [];
+            var complete = [];
+            var incomplete = [];
+
             $.each(data, function(key, val) {
                 if (field[key]) {
                     if (key == "appointment" || key == "dateOfBirth") {
                         val = val.substring(0, 10);
                     }
                     items.push("<tr><th>" + field[key] + "</th><td>" + val + "</td></tr>");
-                } else if (key == "pastImmunization") {
+                } else if (key == "immunization") {
                     for (var i = 0; i < val.length; i++) {
                         val[i].date = val[i].date.substring(0, 10);
+                        console.log(val[i] + " " + val[i].completed)
+                        if (val[i].administered == true) {
+                            complete.push(val[i]);
+                        } else {
+                            incomplete.push(val[i]);
+                        }
                     }
-                    $('#immunizations').DataTable({
-                        data: val,
-                        columns: [
-                            {data: "date"},
-                            {data: "vaccine"}
-                        ],
-                        paging: false,
-                        info: false
-                    })
-                }
+                } 
             });
+            insertTable('#p-immunization', complete);
+
+            var dateCol = 0;
+            console.log(incomplete);
+            insertTable('#s-immunization', incomplete);
+
             $("<tbody>", {
                 html: items.join("")
             }).appendTo("#general");
@@ -57,6 +62,41 @@
             });
         });
     } );
+
+    function insertTable(id, data) {
+        var dateCol = 0;
+        $(id).DataTable({
+            data: data,
+            columns: [
+                {data: "date"},
+                {data: "vaccine"}
+            ],
+            columnDefs: [{
+                "visible": false,
+                "targets": dateCol
+            }],
+            paging: false,
+            info: false,
+            drawCallback: function(settings) {
+                var api = this.api();
+                var rows = api.rows( {page: 'current'}).nodes();
+                var last = null;
+
+                api.column(dateCol, {page: 'currrent'}).data().each(function (group, i) {
+                    // console.log(group + " " + i);
+                    if (last !== group) {
+                        $(rows).eq( i ).before(
+                            '<tr class="group"><td colspan="1">'+ group +
+                            '<button value =' + group + 'class="pure-button complete">complete</button>\
+                            </td></tr>'
+                        );
+                    };
+                    last = group;
+                })
+            }
+        })
+
+    }
 
     
 
