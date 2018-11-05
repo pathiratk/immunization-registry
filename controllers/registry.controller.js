@@ -5,6 +5,7 @@ exports.allUsers = function (req, res) {
    User.find({}, function(err, users) {
       if (err) {
          res.send(err);
+         return;
       }
       res.json(users);
    })
@@ -25,10 +26,12 @@ exports.newUser = function (req, res) {
       immunization: schedule,
       appointment: nextApp
    });
-   // return;
+
    newUser.save(function(err, user) {
-      if (err)
+      if (err) {
          res.send(err);
+         return;
+      }
       res.json(user)
    })
 }
@@ -37,6 +40,7 @@ exports.getUser = function (req, res) {
    User.findById(req.params.id, function(err, user) {
       if (err) {
          res.send(err);
+         return;
       }
       res.json(user);
    })
@@ -44,25 +48,42 @@ exports.getUser = function (req, res) {
 }
 
 exports.updateUser = function (req, res) {
-   var vaccine = {
-      "date": Date.now(),
-      "vaccine": req.body.vaccine,
-      "administeredBy": req.body.administeredBy,
-   }
-   var ap = req.body.appointment;
-   if (ap) {
-      User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}, $set: {"appointment": ap}}, function(err, user) {
+   var date = new Date(req.body.date);
+   User.update(
+      {'_id': req.params.id}, 
+      { $set: {'immunization.$[elem].administered': true}}, 
+      { "arrayFilters": [{"elem.date": date}], "multi": true},
+      function(err, users) {
+      if (err) {
+         res.send(err);
+         return;
+      }
+      User.findById(req.params.id, function(err, user) {
          if (err) {
             res.send(err);
+            return;
          }
-         res.json(user);
-      })
-   } else {
-      User.findByIdAndUpdate(req.params.id, {$push: {"pastImmunization": vaccine}}, function(err, user) {
-         if (err) {
-            res.send(err);
+         var appointment = user.immunization.sort(function(a, b) {
+            return a['date'] - b['date'];
+         }).filter(function (item) {
+            return !item['administered']
+         });
+
+         if (appointment.length == 0) {
+            console.log("no more appointment");
+            appointment = null;
+         } else {
+            appointment = appointment[0]['date'];
          }
-         res.json(user);
+
+         console.log(appointment);
+         User.findByIdAndUpdate(req.params.id, {$set: {'appointment': appointment}}, function(err, user) {
+            if (err) {
+               res.send(err);
+               return;
+            }
+            res.json(users);
+         })
       })
-   }
+   })
 }

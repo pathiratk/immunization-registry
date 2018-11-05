@@ -6,14 +6,14 @@
                 url: 'http://localhost:3000/api/users',
                 dataSrc: function (json) {
                     for (var i = 0; i < json.length; i++) {
-                        json[i].dateOfBirth = json[i].dateOfBirth.substring(0,10);
+                        var date = new Date(json[i].dateOfBirth);
+                        json[i].dateOfBirth = date.yyyymmdd();
                         if (json[i].appointment) {
-                            json[i].appointment = json[i].appointment.substring(0,10);
+                            date = new Date(json[i].appointment)
+                            json[i].appointment = date.yyyymmdd();
                         } else {
                             json[i].appointment = "";
                         }
-                        // json[i].url = "<a href=\"http://localhost:3000/user/\" + json[i]><button>\></button></a>";
-                        
                     }
                     return json;
                 }
@@ -39,3 +39,13 @@
     } );
 
 }(this, this.document));
+
+Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+  
+    return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('-');
+};

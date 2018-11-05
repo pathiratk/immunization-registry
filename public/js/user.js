@@ -21,14 +21,17 @@
 
             $.each(data, function(key, val) {
                 if (field[key]) {
-                    if (key == "appointment" || key == "dateOfBirth") {
-                        val = val.substring(0, 10);
+                    console.log(val);
+                    if ((key == "appointment" && val)|| key == "dateOfBirth") {
+                        var date = new Date(val);
+                        val = date.yyyymmdd();
                     }
-                    items.push("<tr><th>" + field[key] + "</th><td>" + val + "</td></tr>");
+                    if (val) {
+                        items.push("<tr><th>" + field[key] + "</th><td>" + val + "</td></tr>");
+                    }
+                    
                 } else if (key == "immunization") {
                     for (var i = 0; i < val.length; i++) {
-                        val[i].date = val[i].date.substring(0, 10);
-                        console.log(val[i] + " " + val[i].completed)
                         if (val[i].administered == true) {
                             complete.push(val[i]);
                         } else {
@@ -37,33 +40,16 @@
                     }
                 } 
             });
-            insertTable('#p-immunization', complete);
-
-            var dateCol = 0;
-            console.log(incomplete);
-            insertTable('#s-immunization', incomplete);
+            insertTable('#p-immunization', complete, false);
+            insertTable('#s-immunization', incomplete, true);
 
             $("<tbody>", {
                 html: items.join("")
             }).appendTo("#general");
         });
-
-        $("#immunization").submit(function(event) {
-            event.preventDefault();
-            var input = {
-                appointment: $(this).find("#appointment").val(),
-                vaccine: $(this).find("#vaccine").val(),
-                administeredBy: $(this).find("#administered-by").val()
-            }
-            var url = "api/users/" + userID;
-            var result = $.post(url, input);
-            result.done(function(data) {
-                location.reload();
-            });
-        });
     } );
 
-    function insertTable(id, data) {
+    function insertTable(id, data, withButton) {
         var dateCol = 0;
         $(id).DataTable({
             data: data,
@@ -77,6 +63,7 @@
             }],
             paging: false,
             info: false,
+            ordering: false,
             drawCallback: function(settings) {
                 var api = this.api();
                 var rows = api.rows( {page: 'current'}).nodes();
@@ -85,21 +72,47 @@
                 api.column(dateCol, {page: 'currrent'}).data().each(function (group, i) {
                     // console.log(group + " " + i);
                     if (last !== group) {
+                        var button = "";
+                        if (withButton && i == 0) {
+                            button = '<button id ="' + group + '" class="pure-button complete">complete</button>'
+                        }
+                        var date = new Date(group);
+                        console.log(group + " " + date)
                         $(rows).eq( i ).before(
-                            '<tr class="group"><td colspan="1">'+ group +
-                            '<button value =' + group + 'class="pure-button complete">complete</button>\
-                            </td></tr>'
+                            '<tr class="group"><td colspan="1">'+ date.toDateString() + button + '</td></tr>'
                         );
                     };
                     last = group;
                 })
+                registerButtons();
             }
         })
+    }
 
+    function registerButtons() {
+        $('button').click(function(event) {
+            console.log(this.id);
+            var input = {
+                date: this.id
+            }
+            var url = "api/users/" + userID;
+            var result = $.post(url, input);
+            result.done(function(data) {
+                location.reload();
+            });
+        });
     }
 
     
-
-
-
 }(this, this.document));
+
+Date.prototype.yyyymmdd = function() {
+    var mm = this.getMonth() + 1; // getMonth() is zero-based
+    var dd = this.getDate();
+  
+    return [this.getFullYear(),
+            (mm>9 ? '' : '0') + mm,
+            (dd>9 ? '' : '0') + dd
+           ].join('-');
+};
+

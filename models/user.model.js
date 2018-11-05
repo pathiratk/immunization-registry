@@ -13,11 +13,6 @@ let UserSchema = new Schema({
    motherFirstName: {type: String, required: true},
    motherLastName: {type: String, required: true},
    contactInfo: {type: String, required: true},
-   // pastImmunization : [{
-   //    date: {type: Date, required: true},
-   //    vaccine: {type: String, required: true},
-   //    administeredBy: {type: String, required: true}
-   // }],
    immunization: [{
       date: {type: Date, required: true},
       vaccine: {type: String, required: true},
