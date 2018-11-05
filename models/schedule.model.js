@@ -25,7 +25,6 @@ function getSchedule(birthDate){
    }
    for (key in d) {
       for (i in vaccines[key]) {
-         // console.log(d[key] + " " + vaccines[key][i]);
          schedule.push({
             date: d[key],
             vaccine: vaccines[key][i]

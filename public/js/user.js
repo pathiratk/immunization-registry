@@ -21,7 +21,6 @@
 
             $.each(data, function(key, val) {
                 if (field[key]) {
-                    console.log(val);
                     if ((key == "appointment" && val)|| key == "dateOfBirth") {
                         var date = new Date(val);
                         val = date.yyyymmdd();
@@ -70,14 +69,12 @@
                 var last = null;
 
                 api.column(dateCol, {page: 'currrent'}).data().each(function (group, i) {
-                    // console.log(group + " " + i);
                     if (last !== group) {
                         var button = "";
                         if (withButton && i == 0) {
                             button = '<button id ="' + group + '" class="pure-button complete">complete</button>'
                         }
                         var date = new Date(group);
-                        console.log(group + " " + date)
                         $(rows).eq( i ).before(
                             '<tr class="group"><td colspan="1">'+ date.toDateString() + button + '</td></tr>'
                         );
@@ -91,7 +88,6 @@
 
     function registerButtons() {
         $('button').click(function(event) {
-            console.log(this.id);
             var input = {
                 date: this.id
             }

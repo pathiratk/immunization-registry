@@ -14,7 +14,6 @@
         <!--[if gt IE 8]><!-->
             <link rel="stylesheet" href="css/layouts/side-menu.css">
         <!--<![endif]-->
-        <link rel="stylesheet" href="css/layouts/user.css">
 
    <!-- jquery and datatables -->
    <script   src="https://code.jquery.com/jquery-3.3.1.min.js"   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="   crossorigin="anonymous"></script>
@@ -37,58 +36,46 @@
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a href="/home" class="pure-menu-link">Home</a></li>
                 <li class="pure-menu-item"><a href="/newuser" class="pure-menu-link">+ Add New User</a></li>
-                <li class="pure-menu-item"><a href="/report" class="pure-menu-link">Report</a></li>
+                <li class="pure-menu-item pure-menu-selected"><a href="/report" class="pure-menu-link">Report</a></li>
             </ul>
         </div>
     </div>
 
     <div id="main">
         <div class="header">
-            <h1>Patient Information</h1>
-            <!-- <h2>User</h2> -->
+            <h1>Aggregate Report</h1>
         </div>
 
         <div class="content">
-         <h2 class="content-subhead"></h2>
-            <h2 class="content-subhead">General Information</h2>
-            <table id="general" class= "pure-table">
+            <h2 class="content-subhead"><span id="overdue"></span> Overdue Appointments</h2>
+            <table id="table_id" class="display">
                 <thead>
                     <tr>
-                        <th>Field</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-            </table>
-
-            <h2 class="content-subhead">Scheduled Immunization</h2>
-            <table id="s-immunization" class="display">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Vaccine</th>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>Appointment</th>
+                        <th>Contact Info</th>
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
 
-            <h2 class="content-subhead">Past Immunization</h2>
-            <table id="p-immunization" class="display">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Vaccine</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <h2 class="content-subhead"><span id="in-progress"></span> In Progress Immunizations</h2>
+            <h2 class="content-subhead"><span id="completed"></span> Completed Immunizations</h2>
+            
         </div>
     </div>
 </div>
 
+
+
+
 <script src="js/ui.js"></script>
-<script src="js/user.js"></script>
+<script src="js/report.js"></script>
 
 </body>
 </html>

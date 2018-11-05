@@ -28,6 +28,10 @@ app.get('/newuser', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/newUser.html'));
 });
 
+app.get('/report', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/report.html'));
+});
+
 app.get('/:id', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/user.html'));
 });

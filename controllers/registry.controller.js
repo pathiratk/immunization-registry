@@ -13,8 +13,6 @@ exports.allUsers = function (req, res) {
 
 exports.newUser = function (req, res) {
    var schedule = Schedule(req.body.dateOfBirth);
-   var nextApp = new Date();
-   nextApp.setMonth(nextApp.getMonth() + 2);
    var newUser = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -24,7 +22,7 @@ exports.newUser = function (req, res) {
       motherLastName: req.body.motherLastName,
       contactInfo: req.body.contactInfo,
       immunization: schedule,
-      appointment: nextApp
+      appointment: req.body.dateOfBirth
    });
 
    newUser.save(function(err, user) {
@@ -70,13 +68,11 @@ exports.updateUser = function (req, res) {
          });
 
          if (appointment.length == 0) {
-            console.log("no more appointment");
             appointment = null;
          } else {
             appointment = appointment[0]['date'];
          }
 
-         console.log(appointment);
          User.findByIdAndUpdate(req.params.id, {$set: {'appointment': appointment}}, function(err, user) {
             if (err) {
                res.send(err);
