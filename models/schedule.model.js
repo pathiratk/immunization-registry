@@ -1,4 +1,5 @@
 function getSchedule(birthDate){
+   // create future appointments for required immunzations.
    var schedule = [];
    var date = new Date(birthDate);
    var month = date.getMonth()

@@ -1,6 +1,7 @@
 const Patient = require('../models/patient.model');
 const Schedule = require('../models/schedule.model');
 
+// get the data of all patients
 exports.allPatients = function (req, res) {
    Patient.find({}, function(err, patients) {
       if (err) {
@@ -11,6 +12,7 @@ exports.allPatients = function (req, res) {
    })
 }
 
+// create a new patient
 exports.newPatient = function (req, res) {
    var schedule = Schedule(req.body.dateOfBirth);
    var newPatient = new Patient({
@@ -34,6 +36,7 @@ exports.newPatient = function (req, res) {
    })
 }
 
+// get patient data by id
 exports.getPatient = function (req, res) {
    Patient.findById(req.params.id, function(err, patient) {
       if (err) {
@@ -44,6 +47,7 @@ exports.getPatient = function (req, res) {
    })
 }
 
+// update patient's immunization data
 exports.updatePatient = function (req, res) {
    var date = new Date(req.body.date);
    Patient.update(

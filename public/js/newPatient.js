@@ -14,6 +14,7 @@
                 appointment: $(this).find("#appointment").val()
             }
 
+            // send POST REQUEST
             var url = "api/patients/";
             var result = $.post(url, input);
             result.done(function(data) {

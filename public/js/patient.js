@@ -14,11 +14,14 @@
     $(document).ready( function () {
         patientID = window.location.pathname.substring(1);
         var url = "api/patients/" + patientID;
+
+        // send get request
         $.getJSON(url, function(data) {
             var items =[];
             var complete = [];
             var incomplete = [];
 
+            // filter and process json data
             $.each(data, function(key, val) {
                 if (field[key]) {
                     if ((key == "appointment" && val)|| key == "dateOfBirth") {
@@ -39,6 +42,8 @@
                     }
                 } 
             });
+
+            // create two tables
             insertTable('#p-immunization', complete, false);
             insertTable('#s-immunization', incomplete, true);
 

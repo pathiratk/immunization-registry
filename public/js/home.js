@@ -1,10 +1,12 @@
 (function (window, document) {
 
     $(document).ready( function () {
+        // create table
         $('#table_id').DataTable({
             ajax: {
                 url: 'http://localhost:3000/api/patients',
                 dataSrc: function (json) {
+                    // date conversion
                     for (var i = 0; i < json.length; i++) {
                         var date = new Date(json[i].dateOfBirth);
                         json[i].dateOfBirth = date.yyyymmdd();
@@ -31,10 +33,7 @@
                 {data: "dateOfBirth"},
                 {data: "gender"},
                 {data: "appointment"}
-                // {data: "url"}
             ]
-            
-            // data: data
         });
     } );
 
