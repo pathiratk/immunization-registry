@@ -24,8 +24,12 @@ app.get('/home', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/home.html'));
 });
 
-app.get('/newuser', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/newUser.html'));
+app.get('/', (req,res) => {
+  res.redirect('/home');
+})
+
+app.get('/newPatient', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/newPatient.html'));
 });
 
 app.get('/report', (req, res) => {
@@ -33,7 +37,7 @@ app.get('/report', (req, res) => {
 });
 
 app.get('/:id', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/user.html'));
+  res.sendFile(path.join(__dirname, 'public/patient.html'));
 });
 
 

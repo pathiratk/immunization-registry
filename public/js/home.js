@@ -3,7 +3,7 @@
     $(document).ready( function () {
         $('#table_id').DataTable({
             ajax: {
-                url: 'http://localhost:3000/api/users',
+                url: 'http://localhost:3000/api/patients',
                 dataSrc: function (json) {
                     for (var i = 0; i < json.length; i++) {
                         var date = new Date(json[i].dateOfBirth);

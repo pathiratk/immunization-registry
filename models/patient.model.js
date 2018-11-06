@@ -5,7 +5,7 @@ const autoIncrement = require('mongoose-auto-increment');
 const connection = mongoose.createConnection(process.env.MONGODB_URI);
 autoIncrement.initialize(connection);
 
-let UserSchema = new Schema({
+let PatientSchema = new Schema({
    firstName: {type: String, required: true},
    lastName: {type: String, required: true},
    dateOfBirth: {type: Date, required: true},
@@ -16,11 +16,12 @@ let UserSchema = new Schema({
    immunization: [{
       date: {type: Date, required: true},
       vaccine: {type: String, required: true},
-      administered: {type: Boolean, default: false}
+      administered: {type: Boolean, default: false},
+      clinicID: {type: Number, default: 1}
    }],
    appointment: {type: Date},
-   created_date: {type: Date, default: Date.now}
+   createdDate: {type: Date, default: Date.now}
 });
 
-UserSchema.plugin(autoIncrement.plugin, 'User');
-module.exports = mongoose.model('User', UserSchema);
+PatientSchema.plugin(autoIncrement.plugin, 'Patient');
+module.exports = mongoose.model('Patient', PatientSchema);

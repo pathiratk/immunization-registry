@@ -6,12 +6,10 @@
     $(document).ready( function () {
         $('#table_id').DataTable({
             ajax: {
-                url: 'http://localhost:3000/api/users',
+                url: 'http://localhost:3000/api/patients',
                 dataSrc: function (json) {
                     var output = [];
                     for (var i = 0; i < json.length; i++) {
-                        var date = new Date(json[i].dateOfBirth);
-                        json[i].dateOfBirth = date.yyyymmdd();
                         if (json[i].appointment) {
                             var app = new Date(json[i].appointment);
                             json[i].appointment = app.yyyymmdd();
@@ -41,8 +39,8 @@
                 {data: "_id"},
                 {data: "firstName"}, 
                 {data: "lastName"}, 
-                {data: "dateOfBirth"},
-                {data: "gender"},
+                {data: "motherFirstName"},
+                {data: "motherLastName"},
                 {data: "appointment"},
                 {data: "contactInfo"}
             ]

@@ -9,11 +9,11 @@
         contactInfo: "Contact Info",
         appointment: "Appointment"
     }
-    var userID;
+    var patientID;
 
     $(document).ready( function () {
-        userID = window.location.pathname.substring(1);
-        var url = "api/users/" + userID;
+        patientID = window.location.pathname.substring(1);
+        var url = "api/patients/" + patientID;
         $.getJSON(url, function(data) {
             var items =[];
             var complete = [];
@@ -91,7 +91,7 @@
             var input = {
                 date: this.id
             }
-            var url = "api/users/" + userID;
+            var url = "api/patients/" + patientID;
             var result = $.post(url, input);
             result.done(function(data) {
                 location.reload();

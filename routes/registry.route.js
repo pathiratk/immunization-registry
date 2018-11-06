@@ -4,10 +4,10 @@ const router = express.Router();
 const registry = require('../controllers/registry.controller');
 
 router
-   .get('/users', registry.allUsers)
-   .post('/users', registry.newUser);
+   .get('/patients', registry.allPatients)
+   .post('/patients', registry.newPatient);
 router
-   .get('/users/:id', registry.getUser)
-   .post('/users/:id', registry.updateUser);
+   .get('/patients/:id', registry.getPatient)
+   .post('/patients/:id', registry.updatePatient);
 
 module.exports = router;

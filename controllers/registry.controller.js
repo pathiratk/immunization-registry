@@ -1,19 +1,19 @@
-const User = require('../models/user.model');
+const Patient = require('../models/patient.model');
 const Schedule = require('../models/schedule.model');
 
-exports.allUsers = function (req, res) {
-   User.find({}, function(err, users) {
+exports.allPatients = function (req, res) {
+   Patient.find({}, function(err, patients) {
       if (err) {
          res.send(err);
          return;
       }
-      res.json(users);
+      res.json(patients);
    })
 }
 
-exports.newUser = function (req, res) {
+exports.newPatient = function (req, res) {
    var schedule = Schedule(req.body.dateOfBirth);
-   var newUser = new User({
+   var newPatient = new Patient({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       dateOfBirth: req.body.dateOfBirth,
@@ -25,43 +25,42 @@ exports.newUser = function (req, res) {
       appointment: req.body.dateOfBirth
    });
 
-   newUser.save(function(err, user) {
+   newPatient.save(function(err, patient) {
       if (err) {
          res.send(err);
          return;
       }
-      res.json(user)
+      res.json(patient)
    })
 }
 
-exports.getUser = function (req, res) {
-   User.findById(req.params.id, function(err, user) {
+exports.getPatient = function (req, res) {
+   Patient.findById(req.params.id, function(err, patient) {
       if (err) {
          res.send(err);
          return;
       }
-      res.json(user);
+      res.json(patient);
    })
-   // res.send("get user");
 }
 
-exports.updateUser = function (req, res) {
+exports.updatePatient = function (req, res) {
    var date = new Date(req.body.date);
-   User.update(
+   Patient.update(
       {'_id': req.params.id}, 
       { $set: {'immunization.$[elem].administered': true}}, 
       { "arrayFilters": [{"elem.date": date}], "multi": true},
-      function(err, users) {
+      function(err, patients) {
       if (err) {
          res.send(err);
          return;
       }
-      User.findById(req.params.id, function(err, user) {
+      Patient.findById(req.params.id, function(err, patient) {
          if (err) {
             res.send(err);
             return;
          }
-         var appointment = user.immunization.sort(function(a, b) {
+         var appointment = patient.immunization.sort(function(a, b) {
             return a['date'] - b['date'];
          }).filter(function (item) {
             return !item['administered']
@@ -73,12 +72,12 @@ exports.updateUser = function (req, res) {
             appointment = appointment[0]['date'];
          }
 
-         User.findByIdAndUpdate(req.params.id, {$set: {'appointment': appointment}}, function(err, user) {
+         Patient.findByIdAndUpdate(req.params.id, {$set: {'appointment': appointment}}, function(err, patient) {
             if (err) {
                res.send(err);
                return;
             }
-            res.json(users);
+            res.json(patients);
          })
       })
    })
